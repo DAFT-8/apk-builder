@@ -1,5 +1,11 @@
 #!/usr/bin/bash -e
 
+if [ "$1" == "--test" ]; then
+	echo "Launching..."
+	$ADB install -r bin/hello.unaligned.apk
+	$ADB shell am start -n com.example.app/.MainActivity
+fi
+
 command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Install it. Aborting."; exit 1; }
 command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk but it's not installed. Install it. Aborting."; exit 1; }
 command -v unzip > /dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed. Install it. Aborting."; exit 1; }
@@ -99,11 +105,5 @@ $APKSIGNER sign --ks mykey.keystore bin/hello.unaligned.apk
 #$ZIPALIGN -f 4 bin/hello.unaligned.apk bin/hello.apk
 
 echo "All done! Apk at bin. Use --test to run it on your device."
-
-if [ "$1" == "--test" ]; then
-	echo "Launching..."
-	$ADB install -r bin/hello.unaligned.apk
-	$ADB shell am start -n com.example.app/.MainActivity
-fi
 
 exit
