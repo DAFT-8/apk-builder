@@ -98,7 +98,7 @@ keytool -genkeypair -validity 365 -keystore mykey.keystore -keyalg RSA -keysize 
 $APKSIGNER sign --ks mykey.keystore bin/hello.unaligned.apk
 #$ZIPALIGN -f 4 bin/hello.unaligned.apk bin/hello.apk
 
-echo "All done! Apk at bin."
+echo "All done! Apk at bin. Use --test to run it on your device."
 
 if [ "$1" == "--test" ]; then
 	echo "Launching..."
