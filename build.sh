@@ -4,6 +4,7 @@ if [ "$1" == "--test" ]; then
 	echo "Launching..."
 	$ADB install -r bin/hello.unaligned.apk
 	$ADB shell am start -n com.example.app/.MainActivity
+ 	exit
 fi
 
 command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Install it. Aborting."; exit 1; }
