@@ -22,8 +22,6 @@ SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
 
 yes | $SDKMANAGER --install "platform-tools" "platforms;android-29" "build-tools;29.0.2" --sdk_root=/tmp/
 
-./gradlew clean
-
 rm -rfd test/
 rm -rfd *.dex
 rm -rfd obj/*
@@ -124,6 +122,7 @@ elif [ "$1" == "--test" ]; then
  	exit
 fi
 
+./gradlew clean
 ./gradlew build
 
 echo "Cleaning up the mess..."
