@@ -3,7 +3,7 @@
 set -e
 
 command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Install it. Aborting."; exit 1; }
-command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk8 but it's not installed. Install it. Aborting."; exit 1; }
+command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk11 but it's not installed. Install it. Aborting."; exit 1; }
 command -v unzip > /dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed. Install it. Aborting."; exit 1; }
 command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not installed. Install it. Aborting."; exit 1; }
 
@@ -21,6 +21,8 @@ SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
 #[[ -e /tmp/platform-tools.zip ]] || wget -O /tmp/platform-tools.zip 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip' && [[ -d /tmp/platform-tools ]] || unzip /tmp/platform-tools.zip -d /tmp/platform-tools/
 
 yes | $SDKMANAGER --install "platform-tools" "platforms;android-29" "build-tools;29.0.2" --sdk_root=/tmp/
+
+./gradlew clean
 
 rm -rfd test/
 rm -rfd *.dex
