@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-set -ex
+set -e
 
 if [ "$1" == "--test" ]; then
 	echo "Launching..."
