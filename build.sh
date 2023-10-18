@@ -122,6 +122,7 @@ elif [ "$1" == "--test" ]; then
  	exit
 fi
 
+chmod +x gradlew
 ./gradlew clean
 ./gradlew build
 
