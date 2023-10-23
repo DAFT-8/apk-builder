@@ -7,6 +7,14 @@ command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk-11 but it's n
 command -v unzip > /dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed. Install it. Aborting."; exit 1; }
 command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not installed. Install it. Aborting."; exit 1; }
 
+ADB="/tmp/platform-tools/adb"
+AAPT="/tmp/build-tools/**/aapt"
+DX="/tmp/build-tools/**/dx"
+ZIPALIGN="/tmp/build-tools/**/zipalign"
+APKSIGNER="/tmp/build-tools/**/apksigner"
+PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
+SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
+
 if [ "$1" == "--install" ]; then
 	echo "Waiting for device..."
 	$ADB wait-for-device
@@ -18,14 +26,6 @@ elif [ "$1" == "--test" ]; then
 	rm -rfd obj/*
 	rm -rfd **/R.java
 	rm -rfd mykey.keystore
-
-	ADB="/tmp/platform-tools/adb"
-	AAPT="/tmp/build-tools/**/aapt"
-	DX="/tmp/build-tools/**/dx"
-	ZIPALIGN="/tmp/build-tools/**/zipalign"
-	APKSIGNER="/tmp/build-tools/**/apksigner"
-	PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
-	SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
 
 	#[[ -e /tmp/build-tools.zip ]] || wget -O /tmp/build-tools.zip 'https://dl.google.com/android/repository/build-tools_r25-linux.zip' && [[ -d /tmp/build-tools ]] || unzip /tmp/build-tools.zip -d /tmp/build-tools/
 	[[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
