@@ -7,33 +7,33 @@ command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk-11 but it's n
 command -v unzip > /dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed. Install it. Aborting."; exit 1; }
 command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not installed. Install it. Aborting."; exit 1; }
 
-ADB="/tmp/platform-tools/adb"
-AAPT="/tmp/build-tools/**/aapt"
-DX="/tmp/build-tools/**/dx"
-ZIPALIGN="/tmp/build-tools/**/zipalign"
-APKSIGNER="/tmp/build-tools/**/apksigner"
-PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
-SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
-
-#[[ -e /tmp/build-tools.zip ]] || wget -O /tmp/build-tools.zip 'https://dl.google.com/android/repository/build-tools_r25-linux.zip' && [[ -d /tmp/build-tools ]] || unzip /tmp/build-tools.zip -d /tmp/build-tools/
-[[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
-#[[ -e /tmp/platforms.zip ]] || wget -O /tmp/platforms.zip 'https://dl.google.com/android/repository/android-16_r05.zip' && [[ -d /tmp/platforms ]] || unzip /tmp/platforms.zip -d /tmp/platforms/
-#[[ -e /tmp/platform-tools.zip ]] || wget -O /tmp/platform-tools.zip 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip' && [[ -d /tmp/platform-tools ]] || unzip /tmp/platform-tools.zip -d /tmp/platform-tools/
-
-yes | $SDKMANAGER --install "platform-tools" "platforms;android-29" "build-tools;29.0.2" --sdk_root=/tmp/
-
-rm -rfd test/
-rm -rfd *.dex
-rm -rfd obj/*
-rm -rfd **/R.java
-rm -rfd mykey.keystore
-
 if [ "$1" == "--install" ]; then
 	echo "Waiting for device..."
 	$ADB wait-for-device
 	find . -name "*.apk" | xargs $ADB install -r
  	exit
 elif [ "$1" == "--test" ]; then
+	rm -rfd test/
+	rm -rfd *.dex
+	rm -rfd obj/*
+	rm -rfd **/R.java
+	rm -rfd mykey.keystore
+
+	ADB="/tmp/platform-tools/adb"
+	AAPT="/tmp/build-tools/**/aapt"
+	DX="/tmp/build-tools/**/dx"
+	ZIPALIGN="/tmp/build-tools/**/zipalign"
+	APKSIGNER="/tmp/build-tools/**/apksigner"
+	PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
+	SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
+
+	#[[ -e /tmp/build-tools.zip ]] || wget -O /tmp/build-tools.zip 'https://dl.google.com/android/repository/build-tools_r25-linux.zip' && [[ -d /tmp/build-tools ]] || unzip /tmp/build-tools.zip -d /tmp/build-tools/
+	[[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
+	#[[ -e /tmp/platforms.zip ]] || wget -O /tmp/platforms.zip 'https://dl.google.com/android/repository/android-16_r05.zip' && [[ -d /tmp/platforms ]] || unzip /tmp/platforms.zip -d /tmp/platforms/
+	#[[ -e /tmp/platform-tools.zip ]] || wget -O /tmp/platform-tools.zip 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip' && [[ -d /tmp/platform-tools ]] || unzip /tmp/platform-tools.zip -d /tmp/platform-tools/
+
+	yes | $SDKMANAGER --install "platform-tools" "platforms;android-29" "build-tools;29.0.2" --sdk_root=/tmp/
+
 	[[ -d test ]] || mkdir test
 	cd test
 	[[ -d libs ]] || mkdir libs
@@ -116,22 +116,12 @@ elif [ "$1" == "--test" ]; then
 	rm -rfd obj/*
 	rm -rfd src/com/example/app/R.java
 	rm -rfd mykey.keystore
-
-	$ADB install -r bin/hello.unaligned.apk
-	$ADB shell am start -n com.example.app/.MainActivity
  	exit
 fi
 
 chmod +x gradlew
 ./gradlew clean
 ./gradlew build
-
-echo "Cleaning up the mess..."
-rm -rfd test/
-rm -rfd *.dex
-rm -rfd obj/*
-rm -rfd **/R.java
-rm -rfd mykey.keystore
 
 echo "All done! Use build.sh --install to install the app on your device."
 
