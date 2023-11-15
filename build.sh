@@ -2,7 +2,6 @@
 
 set -e
 
-command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Install it. Aborting."; exit 1; }
 command -v javac > /dev/null 2>&1 || { echo >&2 "I require openjdk-11 but it's not installed. Install it. Aborting."; exit 1; }
 command -v unzip > /dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed. Install it. Aborting."; exit 1; }
 command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not installed. Install it. Aborting."; exit 1; }
@@ -32,7 +31,7 @@ elif [ "$1" == "--test" ]; then
 	#[[ -e /tmp/platforms.zip ]] || wget -O /tmp/platforms.zip 'https://dl.google.com/android/repository/android-16_r05.zip' && [[ -d /tmp/platforms ]] || unzip /tmp/platforms.zip -d /tmp/platforms/
 	#[[ -e /tmp/platform-tools.zip ]] || wget -O /tmp/platform-tools.zip 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip' && [[ -d /tmp/platform-tools ]] || unzip /tmp/platform-tools.zip -d /tmp/platform-tools/
 
-	yes | $SDKMANAGER --install "platform-tools" "platforms;android-29" "build-tools;29.0.2" --sdk_root=/tmp/
+	yes | $SDKMANAGER --install "platform-tools" "platforms;android-30" "build-tools;30.0.0" --sdk_root=/tmp/
 
 	[[ -d test ]] || mkdir test
 	cd test
