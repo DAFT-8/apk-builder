@@ -26,10 +26,7 @@ elif [ "$1" == "--test" ]; then
 	rm -rfd **/R.java
 	rm -rfd mykey.keystore
 
-	#[[ -e /tmp/build-tools.zip ]] || wget -O /tmp/build-tools.zip 'https://dl.google.com/android/repository/build-tools_r25-linux.zip' && [[ -d /tmp/build-tools ]] || unzip /tmp/build-tools.zip -d /tmp/build-tools/
 	[[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
-	#[[ -e /tmp/platforms.zip ]] || wget -O /tmp/platforms.zip 'https://dl.google.com/android/repository/android-16_r05.zip' && [[ -d /tmp/platforms ]] || unzip /tmp/platforms.zip -d /tmp/platforms/
-	#[[ -e /tmp/platform-tools.zip ]] || wget -O /tmp/platform-tools.zip 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip' && [[ -d /tmp/platform-tools ]] || unzip /tmp/platform-tools.zip -d /tmp/platform-tools/
 
 	yes | $SDKMANAGER --install "platform-tools" "platforms;android-30" "build-tools;30.0.0" --sdk_root=/tmp/
 
