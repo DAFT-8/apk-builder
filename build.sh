@@ -8,8 +8,6 @@ command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not inst
 
 [[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
 
-yes | $SDKMANAGER --install "platform-tools" "platforms;android-30" "build-tools;30.0.0" --sdk_root=/tmp/
-
 ADB="/tmp/platform-tools/adb"
 AAPT="/tmp/build-tools/**/aapt"
 DX="/tmp/build-tools/**/dx"
@@ -17,6 +15,8 @@ ZIPALIGN="/tmp/build-tools/**/zipalign"
 APKSIGNER="/tmp/build-tools/**/apksigner"
 PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
 SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
+
+yes | $SDKMANAGER --install "platform-tools" "platforms;android-30" "build-tools;30.0.0" --sdk_root=/tmp/
 
 if [ "$1" == "--install" ]; then
 	echo "Waiting for device..."
