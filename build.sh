@@ -8,7 +8,8 @@ command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not inst
 
 [[ -e /tmp/commandline-tools.zip ]] || wget -O /tmp/commandline-tools.zip 'https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip' && [[ -d /tmp/commandline-tools ]] || unzip /tmp/commandline-tools.zip -d /tmp/commandline-tools/
 
-ANDROID_HOME="/tmp/"
+export ANDROID_HOME="/tmp/"
+
 ADB="/tmp/platform-tools/adb"
 SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
 
