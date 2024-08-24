@@ -10,11 +10,6 @@ command -v wget > /dev/null 2>&1 || { echo >&2 "I require wget but it's not inst
 
 ANDROID_HOME="/tmp/"
 ADB="/tmp/platform-tools/adb"
-AAPT="/tmp/build-tools/**/aapt"
-DX="/tmp/build-tools/**/dx"
-ZIPALIGN="/tmp/build-tools/**/zipalign"
-APKSIGNER="/tmp/build-tools/**/apksigner"
-PLATFORM="/tmp/platforms/android-[0-9]*/android.jar"
 SDKMANAGER="/tmp/commandline-tools/cmdline-tools/bin/sdkmanager"
 
 yes | $SDKMANAGER --install "platform-tools" "platforms;android-30" "build-tools;30.0.0" --sdk_root=/tmp/
@@ -31,5 +26,3 @@ chmod +x gradlew
 ./gradlew build
 
 echo "All done! Use build.sh --install to install the app on your device."
-
-exit
