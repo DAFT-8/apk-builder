@@ -19,7 +19,7 @@ if [ "$1" == "--install" ]; then
 	echo "Waiting for device..."
 	$ADB wait-for-device
 	find . -name "*.apk" | xargs $ADB install -r
- 	exit
+	exit
 fi
 
 chmod +x gradlew
